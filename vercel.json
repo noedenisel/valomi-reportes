@@ -1,0 +1,39 @@
+{
+  "framework": "nextjs",
+  "regions": [
+    "gru1"
+  ],
+  "crons": [
+    {
+      "path": "/api/mantenimiento",
+      "schedule": "0 7 * * *"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/reportar",
+      "has": [
+        {
+          "type": "host",
+          "value": "valomi.online"
+        }
+      ],
+      "destination": "https://valomi-prueba.vercel.app/reportar",
+      "permanent": false
+    },
+    {
+      "source": "/borrar",
+      "has": [
+        {
+          "type": "host",
+          "value": "valomi.online"
+        }
+      ],
+      "destination": "https://valomi-prueba.vercel.app/borrar",
+      "permanent": false
+    }
+  ],
+  "git": {
+    "deploymentEnabled": false
+  }
+}
