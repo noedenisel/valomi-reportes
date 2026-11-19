@@ -12,7 +12,7 @@ La dirección `https://valomi-reportes.vercel.app` muestra actualmente una demo 
 
 **Preparado y probado; todavía no publicado en el mapa.** No se pudo recuperar el código actualmente desplegado ni verificar la configuración del proyecto de Vercel. La conexión respondió 403 para el equipo conocido y la autorización de equipo respondió «Team not found».
 
-`vercel.json` incluye temporalmente `git.deploymentEnabled: false` para que cargar este código no sustituya automáticamente la aplicación pública. Antes de habilitar despliegues, identificar el proyecto del servicio real (`https://valomi.online`, con formulario en `https://valomi-prueba.vercel.app/reportar`), comparar o confirmar su código vigente y verificar su configuración existente. No crear otro proyecto ni reemplazar sus variables a ciegas.
+`vercel.json` mantiene los despliegues de `main` desactivados y habilita únicamente la rama de trabajo `preview/dia-48h` que se está enviando para crear una vista previa. Esta rama no se debe usar como rama de producción. Antes de habilitar despliegues, identificar el proyecto del servicio real (`https://valomi.online`, con formulario en `https://valomi-prueba.vercel.app/reportar`), comparar o confirmar su código vigente y verificar su configuración existente. No crear otro proyecto ni reemplazar sus variables a ciegas.
 
 ## Desarrollo y comprobaciones
 
@@ -35,3 +35,10 @@ Capturas de las pruebas locales, con datos ficticios:
 - [Mapa después del vencimiento de 48 horas, sin conexión](docs/vistas/vencido-offline-movil.png).
 
 No se incluyen credenciales, datos locales de reportantes ni archivos de configuración de cuentas. El servicio real de almacenamiento y los accesos de moderación deben conservar la configuración del proyecto actual. La retención interna y el Observatorio se mantienen; ocultar un reporte del mapa no elimina sus registros internos.
+
+
+## Vista previa de revisión
+
+Esta rama prepara una vista previa mediante la conexión de GitHub con el proyecto `noedenisels-projects/valomi-reportes`, indicada por la usuaria. La aplicación pública de ese proyecto continúa mostrando una demo en la revisión del 19 de noviembre. La variante enlazada por `valomi.online` redirige el formulario a `valomi-prueba.vercel.app`; su conexión Git y su configuración siguen pendientes de comprobar.
+
+No se cambia la rama de producción, el dominio ni las variables existentes. La revisión de la vista previa no prueba la entrega de reportes a una base compartida. No se enviarán hechos ni correos durante las comprobaciones.

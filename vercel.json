@@ -34,6 +34,9 @@
     }
   ],
   "git": {
-    "deploymentEnabled": false
+    "deploymentEnabled": {
+      "main": false,
+      "preview/dia-48h": true
+    }
   }
 }
