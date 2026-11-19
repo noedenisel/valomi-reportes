@@ -28,4 +28,10 @@ Las 36 pruebas y la compilación pasan. Se probaron la medianoche argentina, las
 
 [Detalle de los cambios y sus límites](REVISION-DIA-48H.md).
 
+Capturas de las pruebas locales, con datos ficticios:
+
+- [Formulario: solo hechos de hoy](docs/vistas/formulario-solo-hoy.png).
+- [Bloqueo al cruzar la medianoche argentina](docs/vistas/medianoche-bloqueado.png).
+- [Mapa después del vencimiento de 48 horas, sin conexión](docs/vistas/vencido-offline-movil.png).
+
 No se incluyen credenciales, datos locales de reportantes ni archivos de configuración de cuentas. El servicio real de almacenamiento y los accesos de moderación deben conservar la configuración del proyecto actual. La retención interna y el Observatorio se mantienen; ocultar un reporte del mapa no elimina sus registros internos.
