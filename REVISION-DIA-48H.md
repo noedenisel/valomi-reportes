@@ -23,8 +23,10 @@ La compilación de producción y TypeScript terminaron correctamente. En Chromiu
 
 La prueba aislada del service worker verificó la eliminación de la caché anterior, las respuestas JSON 503 de API sin conexión y la conservación de los datos estáticos del mapa. Una instalación antigua que estuviera completamente desconectada necesita reconectarse para recibir la nueva versión.
 
-## Antes de publicar
+## Publicación del 20 de noviembre
 
-El repositorio `noedenisel/valomi-reportes` estaba vacío antes de cargar esta preparación. La conexión directa de Vercel devolvió 403 para el equipo conocido y la autorización de equipo respondió «Team not found». No fue posible recuperar el código que actualmente está desplegado ni comprobar su configuración.
+La usuaria conectó el repositorio a los proyectos existentes `valomi-reportes` y `valomi-prueba`. La integración de GitHub confirmó ambos proyectos y generó vistas previas Ready. El servicio real atiende `valomi.online` y el formulario `valomi-prueba.vercel.app/reportar`; el proyecto `valomi-reportes` es una demo.
 
-Hay que identificar el proyecto de Vercel, recuperar o confirmar su código vigente y comparar esta preparación antes de conectarlo al repositorio y desplegar. No reemplazar la aplicación pública basándose en que esta copia del ZIP es necesariamente su versión actual.
+La publicación se limita mediante `ignoreCommand` al ID del proyecto real y la rama `main`. Los despliegues de producción de la demo, las identidades desconocidas, las configuraciones incompletas y el modo demo en el proyecto real se omiten. Las vistas previas están permitidas en ambos proyectos. Se añadieron seis pruebas para esta separación de destinos y sus códigos de salida.
+
+La conexión directa de Vercel sigue sin acceso al equipo; el despliegue se ejecuta mediante la conexión Git existente. No se modifican dominios, credenciales, variables del proyecto ni datos de reportantes. Las vistas previas están protegidas por autenticación de Vercel: Ready acredita la compilación; las comprobaciones públicas se harán sobre el servicio real después de la publicación.

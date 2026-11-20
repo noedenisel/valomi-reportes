@@ -15,7 +15,7 @@ El repositorio está conectado a dos proyectos existentes del equipo `noedenisel
 
 `ignoreCommand` ejecuta `scripts/permitir-despliegue.mjs` para separar los destinos: permite producción únicamente en el proyecto real y desde `main`, y permite vistas previas en ambos proyectos. Si falta la identidad del proyecto o no coincide con los destinos conocidos, omite el despliegue. El script no modifica dominios, variables ni datos.
 
-Esta rama sigue en revisión con los despliegues de `main` desactivados. La activación se hará conservando el proyecto real y su configuración actual. La conexión directa de Vercel sigue sin acceso al equipo, por lo que el estado de los despliegues se consulta mediante la integración de GitHub.
+Los despliegues de `main` están habilitados y la guardia permite publicar únicamente en el proyecto real, siempre que no esté configurado como demo. El proyecto de la demo omite producción. Se conservan los dominios y las variables existentes. La conexión directa de Vercel sigue sin acceso al equipo, por lo que el estado de los despliegues se consulta mediante la integración de GitHub.
 
 ## Desarrollo y comprobaciones
 
@@ -27,7 +27,7 @@ npm run build
 npm run dev
 ```
 
-Las pruebas funcionales y de despliegue y la compilación pasan. Se probaron la medianoche argentina, las fechas manipuladas, el límite exacto de 48 horas y el vencimiento de ficha/foto sin conexión con un reloj de dispositivo atrasado. Las pruebas usaron datos ficticios locales o solicitudes interceptadas; no se enviaron reportes públicos.
+Las 42 pruebas funcionales y de despliegue pasan, al igual que la compilación. Se probaron la medianoche argentina, las fechas manipuladas, el límite exacto de 48 horas y el vencimiento de ficha/foto sin conexión con un reloj de dispositivo atrasado. Las pruebas usaron datos ficticios locales o solicitudes interceptadas; no se enviaron reportes públicos.
 
 [Detalle de los cambios y sus límites](REVISION-DIA-48H.md).
 
