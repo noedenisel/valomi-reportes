@@ -1,6 +1,6 @@
 # Mapa VaLoMi: hechos de hoy y visibilidad de 48 horas
 
-Preparación del 19 de noviembre de 2026, basada en los archivos reales de `app-reportes` del ZIP entregado. Esta copia no se publicó en el servicio real de `valomi.online` / `valomi-prueba.vercel.app`.
+Preparación del 19 de noviembre de 2026, basada en los archivos reales de `app-reportes` del ZIP entregado. Publicada el 20 de noviembre de 2026 en el servicio real de `valomi.online` / `valomi-prueba.vercel.app`.
 
 ## Comportamiento
 
@@ -13,7 +13,7 @@ Preparación del 19 de noviembre de 2026, basada en los archivos reales de `app-
 
 ## Verificación
 
-Las 36 pruebas de `npm run probar` pasan, incluidos los límites de medianoche argentina, fechas manipuladas, horas imposibles y 47 h 59 min / 48 h exactas / más de 48 h.
+Las 42 pruebas de `npm run probar` pasan, incluidos los límites de medianoche argentina, fechas manipuladas, horas imposibles, 47 h 59 min / 48 h exactas / más de 48 h y la separación entre destinos de publicación.
 
 En el servidor de desarrollo local, con registros expresamente ficticios, el GET de reportes devolvió únicamente los vigentes y `Cache-Control: no-store`. Cinco POST con fechas u horas inválidas devolvieron 400 sin crear registros. No se enviaron reportes a servicios públicos.
 
@@ -29,4 +29,13 @@ La usuaria conectó el repositorio a los proyectos existentes `valomi-reportes` 
 
 La publicación se limita mediante `ignoreCommand` al ID del proyecto real y la rama `main`. Los despliegues de producción de la demo, las identidades desconocidas, las configuraciones incompletas y el modo demo en el proyecto real se omiten. Las vistas previas están permitidas en ambos proyectos. Se añadieron seis pruebas para esta separación de destinos y sus códigos de salida.
 
-La conexión directa de Vercel sigue sin acceso al equipo; el despliegue se ejecuta mediante la conexión Git existente. No se modifican dominios, credenciales, variables del proyecto ni datos de reportantes. Las vistas previas están protegidas por autenticación de Vercel: Ready acredita la compilación; las comprobaciones públicas se harán sobre el servicio real después de la publicación.
+La conexión directa de Vercel sigue sin acceso al equipo; el despliegue se ejecuta mediante la conexión Git existente. No se modifican dominios, credenciales, variables del proyecto ni datos de reportantes. Las vistas previas están protegidas por autenticación de Vercel. La publicación inicial `7d05002` terminó Ready en el proyecto real y el despliegue de la demo fue omitido por la regla configurada.
+
+
+## Verificación pública tras publicar
+
+El 20 de noviembre se comprobó que `valomi.online` y `valomi-prueba.vercel.app` sirven la versión nueva, sin aviso de demo. La portada dice que solo se reportan hechos de hoy; el mapa muestra 48 horas por defecto y filtros de 48 o 24 horas; el tercer paso solicita una hora de hoy en Argentina y no ofrece ayer ni anteayer.
+
+Chromium en 1440, 390 y 360 píxeles, en ambos hosts: mapa y calles cargados, formulario actualizado, sin desbordamiento horizontal ni excepciones JavaScript. La API pública respondió 200 JSON y `no-store`, con cero reportes en el momento de la comprobación. El vencimiento exacto de fichas y fotos se verificó con datos ficticios locales; no se crearon reportes ni se enviaron correos en producción.
+
+La revisión detectó que los enlaces internos de Next intentaban precargar `/reportar` y `/borrar` antes de su redirección entre dominios, provocando errores de CSP y una navegación de respaldo. Esos accesos usan navegación HTML normal para conservar el destino del formulario y las restricciones de seguridad existentes.

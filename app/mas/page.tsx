@@ -9,7 +9,7 @@ export default function Mas() {
     <div className="contenedor">
       <h1 className="titulo-paso">Más</h1>
       <ul className="menu-mas">
-        <li><Link href="/borrar">Pedir que se borre un reporte <span aria-hidden="true">›</span></Link></li>
+        <li><a href="/borrar">Pedir que se borre un reporte <span aria-hidden="true">›</span></a></li>
         <li><Link href="/como-se-revisan">Cómo se revisan los reportes <span aria-hidden="true">›</span></Link></li>
         <li><Link href="/privacidad">Privacidad y términos <span aria-hidden="true">›</span></Link></li>
       </ul>
