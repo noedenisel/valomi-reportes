@@ -8,7 +8,7 @@ export default function Inicio() {
         Todos sabemos lo que pasa. <span>Con voluntad y sin corrupción, se resuelve.</span>
       </h1>
       <p>Contá lo que viste o te pasó en Lomas del Mirador, Lomas del Millón, San Justo o Ramos Mejía. Sin cuenta y sin dar tu nombre.</p>
-      <Link href="/reportar" className="boton boton--primario boton--grande boton--ancho">Reportar un hecho</Link>
+      <a href="/reportar" className="boton boton--primario boton--grande boton--ancho">Reportar un hecho</a>
       <Link href="/mapa" className="boton boton--secundario boton--ancho">Ver el mapa</Link>
       <section className="caja caja--gris" aria-labelledby="como-titulo">
         <h2 id="como-titulo">Cómo funciona</h2>

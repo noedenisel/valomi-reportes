@@ -1,12 +1,14 @@
 # VaLoMi · mapa de reportes
 
-Código preparado a partir de `app-reportes` del ZIP entregado por VaLoMi. Incluye la actualización solicitada el 19 de noviembre de 2026:
+Código preparado a partir de `app-reportes` del ZIP entregado por VaLoMi. Actualización solicitada el 19 de noviembre y publicada en el mapa real el 20 de noviembre de 2026:
 
 - Solo admite hechos del día actual en Argentina, con validación en el servidor.
 - Los reportes y sus adjuntos públicos dejan de verse al cumplir 48 horas desde el hecho.
 - La expiración también se aplica a fichas abiertas y a los datos que permanecen en memoria sin conexión.
 
 ## Proyectos y publicación
+
+**Publicado:** [mapa](https://valomi.online/mapa) · [reportar un hecho](https://valomi.online/reportar).
 
 El repositorio está conectado a dos proyectos existentes del equipo `noedenisels-projects`:
 

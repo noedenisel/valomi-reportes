@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Map as MapaML, Marker } from 'maplibre-gl';
 import { ENCUADRE_BARRIO, MapaBase } from './MapaBase';
@@ -216,7 +215,7 @@ export function PantallaMapa() {
             ) : periodo === '24h' ? (
               <button type="button" className="boton boton--secundario" onClick={() => setPeriodo('48h')}>Ver últimas 48 h</button>
             ) : null}
-            <Link href="/reportar" className="boton boton--primario">Reportar</Link>
+            <a href="/reportar" className="boton boton--primario">Reportar</a>
           </div>
         </div>
       )}
@@ -345,7 +344,7 @@ function Ficha({ reportes, todos, ahora, alCerrar, alElegir }: {
           Hay {parecidos} {parecidos === 1 ? 'reporte parecido' : 'reportes parecidos'} cerca. Que coincidan no prueba que el hecho ocurrió.
         </span>
       )}
-      <Link href={`/borrar?numero=${r.numero}`} className="boton boton--texto" style={{ justifySelf: 'start' }}>Pedir que se borre este reporte</Link>
+      <a href={`/borrar?numero=${r.numero}`} className="boton boton--texto" style={{ justifySelf: 'start' }}>Pedir que se borre este reporte</a>
     </div>
   );
 }

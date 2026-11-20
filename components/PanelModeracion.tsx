@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Adjunto, DatosMes, InformeMensual, LineaRegistro, MetodoConfirmacion, Reporte, Solicitud } from '@/lib/tipos';
 import { nombreMes } from '@/lib/observatorio';
@@ -85,7 +84,7 @@ export function PanelModeracion() {
           Salir del panel
         </button>
       )}
-      <Link href="/reportar" className="boton boton--primario boton--chico" style={{ justifySelf: 'start' }}>Cargar reporte</Link>
+      <a href="/reportar" className="boton boton--primario boton--chico" style={{ justifySelf: 'start' }}>Cargar reporte</a>
       {mensaje && <p role="status" className="ayuda">{mensaje}</p>}
 
       <section className="grilla-mod" aria-labelledby="pend">

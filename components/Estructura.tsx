@@ -33,7 +33,9 @@ export function Encabezado() {
         </Link>
         <div className="encabezado__acciones">
           <nav className="nav-superior" aria-label="Principal">
-            {SECCIONES.map((s) => (
+            {SECCIONES.map((s) => s.href === '/reportar' ? (
+              <a key={s.href} href={s.href} aria-current={activa(ruta, s.href) ? 'page' : undefined}>{s.texto}</a>
+            ) : (
               <Link key={s.href} href={s.href} aria-current={activa(ruta, s.href) ? 'page' : undefined}>{s.texto}</Link>
             ))}
           </nav>
@@ -51,10 +53,10 @@ export function NavInferior() {
     <nav className="nav-inferior" aria-label="Principal">
       {SECCIONES.map((s) =>
         s.href === '/reportar' ? (
-          <Link key={s.href} href={s.href} className="reportar" aria-current={activa(ruta, s.href) ? 'page' : undefined}>
+          <a key={s.href} href={s.href} className="reportar" aria-current={activa(ruta, s.href) ? 'page' : undefined}>
             <span className="circulo"><Icono nombre="reportar" /></span>
             {s.texto}
-          </Link>
+          </a>
         ) : (
           <Link key={s.href} href={s.href} aria-current={activa(ruta, s.href) ? 'page' : undefined}>
             <Icono nombre={s.icono} />
