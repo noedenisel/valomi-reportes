@@ -34,6 +34,10 @@
     }
   ],
   "git": {
-    "deploymentEnabled": false
-  }
+    "deploymentEnabled": {
+      "main": true,
+      "preview/dia-48h": true
+    }
+  },
+  "ignoreCommand": "node scripts/permitir-despliegue.mjs"
 }
