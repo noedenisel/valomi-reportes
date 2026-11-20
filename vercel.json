@@ -38,5 +38,6 @@
       "main": false,
       "preview/dia-48h": true
     }
-  }
+  },
+  "ignoreCommand": "node scripts/permitir-despliegue.mjs"
 }

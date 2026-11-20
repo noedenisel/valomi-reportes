@@ -6,13 +6,16 @@ Código preparado a partir de `app-reportes` del ZIP entregado por VaLoMi. Inclu
 - Los reportes y sus adjuntos públicos dejan de verse al cumplir 48 horas desde el hecho.
 - La expiración también se aplica a fichas abiertas y a los datos que permanecen en memoria sin conexión.
 
-## Estado de publicación
+## Proyectos y publicación
 
-La dirección `https://valomi-reportes.vercel.app` muestra actualmente una demo de datos ficticios guardados solo en cada navegador. No confundirla con el servicio real de `valomi.online` / `valomi-prueba.vercel.app`. El nombre de este repositorio no obliga a desplegarlo en el proyecto de la demo.
+El repositorio está conectado a dos proyectos existentes del equipo `noedenisels-projects`:
 
-**Preparado y probado; todavía no publicado en el mapa.** No se pudo recuperar el código actualmente desplegado ni verificar la configuración del proyecto de Vercel. La conexión respondió 403 para el equipo conocido y la autorización de equipo respondió «Team not found».
+- `valomi-prueba` (`prj_4CNMQesFHuLyoX18BtWHHUiWnsID`): servicio real que atiende `valomi.online`; su formulario abre `valomi-prueba.vercel.app/reportar`.
+- `valomi-reportes` (`prj_wMEsSpWxE9yZ2skvXAIBifpU8Goz`): demo con datos ficticios guardados en cada navegador.
 
-`vercel.json` mantiene los despliegues de `main` desactivados y habilita únicamente la rama de trabajo `preview/dia-48h` que se está enviando para crear una vista previa. Esta rama no se debe usar como rama de producción. Antes de habilitar despliegues, identificar el proyecto del servicio real (`https://valomi.online`, con formulario en `https://valomi-prueba.vercel.app/reportar`), comparar o confirmar su código vigente y verificar su configuración existente. No crear otro proyecto ni reemplazar sus variables a ciegas.
+`ignoreCommand` ejecuta `scripts/permitir-despliegue.mjs` para separar los destinos: permite producción únicamente en el proyecto real y desde `main`, y permite vistas previas en ambos proyectos. Si falta la identidad del proyecto o no coincide con los destinos conocidos, omite el despliegue. El script no modifica dominios, variables ni datos.
+
+Esta rama sigue en revisión con los despliegues de `main` desactivados. La activación se hará conservando el proyecto real y su configuración actual. La conexión directa de Vercel sigue sin acceso al equipo, por lo que el estado de los despliegues se consulta mediante la integración de GitHub.
 
 ## Desarrollo y comprobaciones
 
@@ -24,7 +27,7 @@ npm run build
 npm run dev
 ```
 
-Las 36 pruebas y la compilación pasan. Se probaron la medianoche argentina, las fechas manipuladas, el límite exacto de 48 horas y el vencimiento de ficha/foto sin conexión con un reloj de dispositivo atrasado. Las pruebas usaron datos ficticios locales o solicitudes interceptadas; no se enviaron reportes públicos.
+Las pruebas funcionales y de despliegue y la compilación pasan. Se probaron la medianoche argentina, las fechas manipuladas, el límite exacto de 48 horas y el vencimiento de ficha/foto sin conexión con un reloj de dispositivo atrasado. Las pruebas usaron datos ficticios locales o solicitudes interceptadas; no se enviaron reportes públicos.
 
 [Detalle de los cambios y sus límites](REVISION-DIA-48H.md).
 
@@ -37,8 +40,11 @@ Capturas de las pruebas locales, con datos ficticios:
 No se incluyen credenciales, datos locales de reportantes ni archivos de configuración de cuentas. El servicio real de almacenamiento y los accesos de moderación deben conservar la configuración del proyecto actual. La retención interna y el Observatorio se mantienen; ocultar un reporte del mapa no elimina sus registros internos.
 
 
-## Vista previa de revisión
+## Vistas previas de revisión
 
-Esta rama prepara una vista previa mediante la conexión de GitHub con el proyecto `noedenisels-projects/valomi-reportes`, indicada por la usuaria. La aplicación pública de ese proyecto continúa mostrando una demo en la revisión del 19 de noviembre. La variante enlazada por `valomi.online` redirige el formulario a `valomi-prueba.vercel.app`; su conexión Git y su configuración siguen pendientes de comprobar.
+La conexión con el proyecto real fue confirmada por la usuaria y por el despliegue de la rama `preview/dia-48h` en ambos proyectos el 20 de noviembre de 2026:
 
-No se cambia la rama de producción, el dominio ni las variables existentes. La revisión de la vista previa no prueba la entrega de reportes a una base compartida. No se enviarán hechos ni correos durante las comprobaciones.
+- [Vista previa del proyecto real](https://valomi-prueba-git-preview-dia-48h-noedenisels-projects.vercel.app/).
+- [Vista previa de la demo](https://valomi-reportes-git-preview-dia-48h-noedenisels-projects.vercel.app/).
+
+Las vistas previas exigen una sesión de Vercel autorizada. El estado Ready confirma la compilación, pero no equivale a una comprobación autenticada del formulario o a un alta completa. Las pruebas funcionales locales usaron datos ficticios y solicitudes interceptadas.
