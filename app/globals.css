@@ -227,3 +227,37 @@ body:has(.aviso-demo) .mapa-pantalla { height: calc(100dvh - 206px - env(safe-ar
 
 .creditos { font-size: 0.8125rem; color: var(--gris-600); text-align: center; padding-bottom: 8px; }
 .creditos p { margin: 0; }
+
+/* Bandeja privada de relevamientos de VaLoMi. */
+.relevamientos { min-width: 0; gap: 16px; scroll-margin-top: 56px; }
+.relevamientos details > summary { cursor: pointer; font-weight: 700; overflow-wrap: anywhere; }
+.relevamientos details[open] > summary { margin-bottom: 12px; }
+.relevamientos form, .relevamientos__previa, .relevamientos__fichas, .relevamientos__edicion, .relevamientos__decision { display: grid; gap: 14px; min-width: 0; }
+.relevamientos__lista { margin: 0; padding-left: 1.25em; display: grid; gap: 8px; }
+.relevamientos__original { white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; font: inherit; font-size: 0.9rem; max-height: 360px; overflow-y: auto; background: var(--gris-100); padding: 12px; border-radius: 8px; }
+.relevamientos__url { display: block; overflow-wrap: anywhere; margin-top: 4px; }
+.relevamientos__filtro { max-width: 360px; }
+.relevamientos__ficha { min-width: 0; overflow-wrap: anywhere; }
+.relevamientos__decision > legend { margin-bottom: 10px; font-weight: 700; }
+.relevamientos__dos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.relevamientos__totales { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.relevamientos__totales > div { display: grid; gap: 3px; padding: 12px; border-radius: 8px; background: var(--gris-100); }
+.relevamientos__totales strong { font-size: 1.6rem; line-height: 1.1; }
+.relevamientos__totales span { font-size: 0.85rem; color: var(--gris-700); }
+.relevamientos__tablas { display: grid; gap: 16px; min-width: 0; }
+.relevamientos__conteos { min-width: 0; }
+.relevamientos__conteos .tabla-mod { min-width: 0; table-layout: fixed; }
+.relevamientos__conteos .tabla-mod caption { text-align: left; font-weight: 700; padding-bottom: 8px; }
+.relevamientos__conteos .tabla-mod th, .relevamientos__conteos .tabla-mod td { overflow-wrap: anywhere; }
+.relevamientos__conteos .tabla-mod th:last-child, .relevamientos__conteos .tabla-mod td:last-child { width: 90px; text-align: right; }
+.relevamientos__ficha .fila-botones > *, .relevamientos__previa .boton { min-width: 0; }
+@media (max-width: 420px) {
+  .relevamientos { padding: 12px; }
+  .relevamientos__ficha { padding: 12px; }
+  .relevamientos__ficha .fila-botones, .relevamientos__previa .fila-botones { flex-direction: column; }
+  .relevamientos__dos { grid-template-columns: 1fr; }
+}
+@media (min-width: 850px) {
+  .relevamientos__totales { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .relevamientos__tablas { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

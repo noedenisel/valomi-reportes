@@ -35,7 +35,69 @@ export type Reporte = {
   avisoDatos: string[];
   adjuntos: Adjunto[];
   confirmacion: { metodo: MetodoConfirmacion; fuente: string | null } | null;
+  /** Origen editorial: nunca se mezcla con la serie de reportes ciudadanos. */
+  origen?: 'relevamiento-valomi';
+  relevamientoId?: string;
   demo?: boolean;
+};
+
+export type FuenteRelevamiento = {
+  nombre: string;
+  plataforma: string;
+  url: string | null;
+  fechaPublicacion: string | null;
+};
+
+export type CamposRelevamiento = {
+  categoria: string | null;
+  resumen: string;
+  fechaHecho: string | null;
+  horaHecho: string | null;
+  localidad: string | null;
+  referencia: string | null;
+  punto: { lon: number; lat: number } | null;
+  riesgo: 'no' | 'si' | 'nose';
+  fuentes: FuenteRelevamiento[];
+};
+
+export type FichaRelevamiento = CamposRelevamiento & {
+  id: string;
+  identificador: string;
+  origen: 'relevamiento-valomi';
+  textoOriginal: string | null;
+  importado: number;
+  actualizado: number;
+  aprobado: number | null;
+  estado: 'pendiente' | 'aprobado' | 'vinculado' | 'descartado' | 'retirado';
+  destino: 'archivo' | 'mapa' | null;
+  vinculadoA: string | null;
+  reporteId: string | null;
+  fuentesRevisadas: boolean;
+  duplicadosRevisados: boolean;
+};
+
+export type FichaRelevamientoVista = FichaRelevamiento & {
+  faltantes: string[];
+  avisoDatos: string[];
+  posiblesDuplicados: { id: string; identificador: string }[];
+  anclaConservacion: number;
+};
+
+export type ResumenRelevamientos = {
+  origen: 'Relevamiento VaLoMi';
+  total: number;
+  mapa: number;
+  archivo: number;
+  sinFecha: number;
+  porFecha: Record<string, number>;
+  porMes: Record<string, number>;
+  porCategoria: Record<string, number>;
+  porZona: Record<string, number>;
+};
+
+export type VistaRelevamientos = {
+  fichas: FichaRelevamientoVista[];
+  resumen: ResumenRelevamientos;
 };
 
 export type Solicitud = {
@@ -83,4 +145,5 @@ export type Base = {
   registro: LineaRegistro[];
   contador: number;
   informes?: InformeMensual[];
+  relevamientos?: FichaRelevamiento[];
 };

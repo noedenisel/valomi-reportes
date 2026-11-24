@@ -179,7 +179,15 @@ async function atender(url: URL, init: RequestInit = {}): Promise<Response> {
       await (cola = cola.then(reiniciar));
       return json({ ok: true });
     }
-    const resultado = await transaccion((b) => accionModeracion(b, d, ahora, borrarArchivo));
+    const resultado = await transaccion(async (b) => {
+      const resultado = await accionModeracion(b, d, ahora, borrarArchivo);
+      if (!resultado && d.accion === 'relevamiento-aprobar' && d.destino === 'mapa') {
+        const ficha = b.relevamientos?.find((f) => f.id === d.id);
+        const reporte = b.reportes.find((r) => r.id === ficha?.reporteId);
+        if (reporte) reporte.demo = true;
+      }
+      return resultado;
+    });
     return resultado ? error(400, resultado) : json({ ok: true });
   }
 

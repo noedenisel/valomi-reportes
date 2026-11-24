@@ -40,7 +40,7 @@ const vacio = (): PorEstado => ({ 'sin-verificar': 0, revisado: 0, corroborado: 
 
 export function calcularMes(b: Base, periodo: string): DatosMes {
   const { desde, hasta } = limitesMes(periodo);
-  const delMes = b.reportes.filter((r) => r.momento >= desde && r.momento < hasta && r.estado !== 'retenido');
+  const delMes = b.reportes.filter((r) => r.momento >= desde && r.momento < hasta && r.estado !== 'retenido' && r.origen !== 'relevamiento-valomi');
   const porEstado = vacio();
   const porCategoria: Record<string, PorEstado> = Object.fromEntries(TIPOS.map((t) => [t.id, vacio()]));
   const celdas = new Map<string, { id: string; lon: number; lat: number; cantidad: number }>();
@@ -68,7 +68,7 @@ export function calcularMes(b: Base, periodo: string): DatosMes {
 
 /** Meses con reportes, del más reciente al más antiguo. */
 export function mesesConReportes(b: Base) {
-  return [...new Set(b.reportes.filter((r) => r.estado !== 'retenido').map((r) => periodoDe(r.momento)))].sort().reverse();
+  return [...new Set(b.reportes.filter((r) => r.estado !== 'retenido' && r.origen !== 'relevamiento-valomi').map((r) => periodoDe(r.momento)))].sort().reverse();
 }
 
 /** Genera (o vuelve a generar) el borrador del mes. Un informe aprobado no se pisa: se corrige retirándolo. */
