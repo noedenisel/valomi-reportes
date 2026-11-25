@@ -1,7 +1,7 @@
 {
   "pruebasLogica": {
-    "total": 77,
-    "correctas": 77,
+    "total": 80,
+    "correctas": 80,
     "fallos": 0
   },
   "pruebasNavegador": {
@@ -149,5 +149,17 @@
       "enviosAlServidor": 0
     },
     "verificacionRemota": "Vercel Authentication activa; verificación de flujo realizada localmente con la configuración de Preview."
+  },
+  "fuentesPorHecho": {
+    "passed": true,
+    "fuentesImportadas": 25,
+    "fuentesConservadasTrasEdicion": 30,
+    "fuenteInvalidaNoReemplazaDatos": true,
+    "estado": "pendiente",
+    "aprobaciones": 0,
+    "conteos": 0,
+    "solicitudesExternasOEscriturasDeRed": [],
+    "erroresJavaScript": [],
+    "alcance": "Solo demo local en contexto IndexedDB aislado y datos ficticios."
   }
 }

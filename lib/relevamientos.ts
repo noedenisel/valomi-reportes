@@ -57,7 +57,7 @@ export function urlFuenteValida(s: string): boolean {
 
 function fuentes(v: unknown): FuenteRelevamiento[] {
   if (v == null) return [];
-  if (!Array.isArray(v) || v.length > 10) throw new Error('Cada hecho admite hasta 10 fuentes.');
+  if (!Array.isArray(v)) throw new Error('Las fuentes de cada hecho deben ser una lista.');
   return v.map((f) => {
     if (!objeto(f)) throw new Error('Revisá el formato de las fuentes.');
     const url = opcional(f.url, 2048, 'URL');

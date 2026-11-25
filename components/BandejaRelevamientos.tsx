@@ -346,7 +346,7 @@ function Ficha({ ficha, todas, ocupado, guardando, ahora, mostrarMapa, abrirMapa
                     <button type="button" className="boton boton--texto" onClick={() => cambiar('fuentes', campos.fuentes.filter((_, indice) => indice !== i))}>Quitar esta fuente</button>
                   </fieldset>
                 ))}
-                <button type="button" className="boton boton--secundario" disabled={campos.fuentes.length >= 10} onClick={() => cambiar('fuentes', [...campos.fuentes, { nombre: '', plataforma: '', url: null, fechaPublicacion: null }])}>Añadir fuente</button>
+                <button type="button" className="boton boton--secundario" onClick={() => cambiar('fuentes', [...campos.fuentes, { nombre: '', plataforma: '', url: null, fechaPublicacion: null }])}>Añadir fuente</button>
                 {error && <p className="error" role="alert">{error}</p>}
                 <div className="fila-botones">
                   <button type="submit" className="boton boton--primario" disabled={!modificado}>{guardando ? 'Guardando…' : 'Guardar cambios'}</button>

@@ -10,7 +10,7 @@ Cada elemento de hechos debe tener exactamente estos campos:
 - horaHecho: hora del hecho como HH:mm de Argentina, o null.
 - localidad: localidad expresamente mencionada, o null.
 - referencia: calle/esquina o referencia indicada por la fuente, o null. No inventes coordenadas.
-- fuentes: lista de objetos con nombre, plataforma, url y fechaPublicacion. Plataforma: medio, facebook, x u otra. URL: enlace original HTTPS completo y real, o null. Si solo consta HTTP, no inventes una versión HTTPS: dejá null y aclaralo en el resumen habitual. FechaPublicacion: YYYY-MM-DD, o null.
+- fuentes: lista de objetos con nombre, plataforma, url y fechaPublicacion. Conservá todas las fuentes reales del mismo hecho; varias fuentes no se convierten en varios hechos. Plataforma: medio, facebook, x u otra. URL: enlace original HTTPS completo y real, o null. Si solo consta HTTP, no inventes una versión HTTPS: dejá null y aclaralo en el resumen habitual. FechaPublicacion: YYYY-MM-DD, o null.
 
 REGLAS:
 1. Usá null para todo dato que no conste. No deduzcas la fecha del hecho a partir de su publicación, del identificador ALR, de la fecha del barrido o de este chat. Si solo se conoce 17/11 y no el año, conservá esa expresión en el resumen; fechaHecho queda null hasta verificar el año.

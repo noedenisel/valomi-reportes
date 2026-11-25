@@ -18,6 +18,9 @@ const fuente = (extra = {}) => ({
   nombre: 'Fuente sintética para pruebas', plataforma: 'web',
   url: 'https://example.org/fuente-sintetica', fechaPublicacion: '2026-11-24', ...extra,
 });
+const fuentesInventadas = (cantidad) => Array.from({ length: cantidad }, (_, i) => fuente({
+  nombre: `Fuente inventada ALR-TEST-FUENTE-${i + 1}`, url: `https://example.org/${i + 1}`,
+}));
 const hecho = (extra = {}) => ({
   identificador: 'ALR-TEST-001', categoria: 'calle',
   resumen: 'Caso ficticio creado exclusivamente para verificar la revisión humana.',
@@ -159,6 +162,70 @@ test('fuentes: rechaza protocolos, credenciales, direcciones locales y URL incom
     assert.equal(typeof importarRelevamientos(baseVacia(), lote([hecho({ fuentes: [fuente({ url })] })]), AHORA), 'string', url);
   }
   assert.equal(urlFuenteValida('https://example.org/fuente-sintetica'), true);
+});
+
+test('25 fuentes se conservan completas al parsear e importar sin aprobar ni publicar', () => {
+  const fuentes = fuentesInventadas(25);
+  const texto = lote([hecho({ fuentes })]);
+  const p = parsearRelevamientos(texto);
+  assert.ok('candidatos' in p, JSON.stringify(p));
+  assert.equal(p.candidatos[0].fuentes.length, 25);
+  assert.deepEqual(p.candidatos[0].fuentes, fuentes);
+
+  const b = baseVacia();
+  assert.equal(importarRelevamientos(b, texto, AHORA), null);
+  assert.equal(b.relevamientos.length, 1);
+  assert.deepEqual(b.relevamientos[0].fuentes, fuentes);
+  assert.equal(b.relevamientos[0].estado, 'pendiente');
+  assert.equal(b.relevamientos[0].aprobado, null);
+  assert.equal(b.relevamientos[0].reporteId, null);
+  assert.equal(b.reportes.length, 0);
+  assert.equal(b.contador, 0);
+  assert.equal(resumenRelevamientos(b).total, 0);
+});
+
+test('editar amplía de 25 a 30 fuentes sin perder las existentes ni cambiar el estado pendiente', async () => {
+  const b = baseVacia();
+  const originales = fuentesInventadas(25);
+  const ampliadas = fuentesInventadas(30);
+  const r = cargar(b, { fuentes: originales });
+  assert.equal(await accion(b, {
+    accion: 'relevamiento-editar', id: r.id, campos: { fuentes: ampliadas },
+  }), null);
+  assert.equal(r.fuentes.length, 30);
+  assert.deepEqual(r.fuentes.slice(0, 25), originales);
+  assert.deepEqual(r.fuentes, ampliadas);
+  assert.equal(r.estado, 'pendiente');
+  assert.equal(r.aprobado, null);
+  assert.equal(r.reporteId, null);
+  assert.equal(b.reportes.length, 0);
+  assert.equal(b.contador, 0);
+  assert.equal(resumenRelevamientos(b).total, 0);
+});
+
+test('una fuente inválida después de la décima rechaza todo el lote y toda la edición', async () => {
+  for (const [indice, cambios] of [
+    [24, { url: 'javascript:alert(1)' }],
+    [25, { nombre: 123 }],
+    [29, { fechaPublicacion: '2026-02-30' }],
+  ]) {
+    const b = baseVacia();
+    const previa = cargar(b, { identificador: 'ALR-TEST-PREVIO' });
+    const antes = structuredClone(b);
+    const invalidas = fuentesInventadas(30);
+    invalidas[indice] = { ...invalidas[indice], ...cambios };
+    const error = importarRelevamientos(b, lote([
+      hecho({ fuentes: fuentesInventadas(25) }),
+      hecho({ identificador: 'ALR-TEST-002', fuentes: invalidas }),
+    ]), AHORA);
+    assert.equal(typeof error, 'string', `fuente ${indice + 1}`);
+    assert.deepEqual(b, antes, 'No se guarda siquiera el primer hecho válido del lote.');
+
+    assert.equal(typeof await accion(b, {
+      accion: 'relevamiento-editar', id: previa.id, campos: { fuentes: invalidas },
+    }), 'string');
+    assert.deepEqual(b, antes, 'Las fuentes anteriores se conservan al rechazar una edición.');
+  }
 });
 
 test('calendario: no normaliza fechas u horas inexistentes; el lote queda vacío', () => {
