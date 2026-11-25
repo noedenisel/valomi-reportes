@@ -36,3 +36,14 @@ La API de moderación sigue exigiendo la sesión existente. Las fuentes se revis
 - La agrupación por localidad exporta únicamente las cuatro zonas del mapa y las etiquetas González Catán/Villa Luzuriaga reconocidas para el archivo. Los nombres libres quedan privados y se agrupan como localidad no catalogada. Ese catálogo de etiquetas no amplía el territorio ni representa un listado oficial completo.
 
 Evidencias sin casos reales: [resumen de pruebas](verificacion-relevamientos.json), [vista de escritorio](vistas/bandeja-demo-1440.png), [vista móvil](vistas/bandeja-demo-390.png). Las cantidades de las capturas son ficticias y pertenecen a la demostración.
+
+
+## Corrección del acceso a Preview · 25/11/2026
+
+El Preview se ejecuta con NODE_ENV=production. Sin Supabase ni la variable de demostración disponible para Preview, el panel responde 404. Se reprodujo ese comportamiento antes del arreglo.
+
+La configuración de Next fija NEXT_PUBLIC_VALOMI_DEMO=navegador durante la compilación únicamente cuando coinciden el proyecto de demostración y el entorno Preview. Servidor e interfaz reciben el mismo valor. Las variables existentes de Production se conservan; no se habilita automáticamente la demo en el proyecto real ni en otros proyectos. La precedencia de la sesión de Supabase permanece intacta.
+
+Comprobaciones: 77 pruebas automáticas correctas; compilación de Preview sin la variable explícita de demo; panel HTTP 200 y 27 comprobaciones de navegador correctas con datos en IndexedDB. Al configurar credenciales ficticias de Supabase, sin iniciar sesión ni realizar consultas externas, el panel redirige a la entrada y su API responde 401. El panel real sin base configurada conserva su 404. La API del servidor de demo sin base responde 503; la interfaz no la utiliza porque sus operaciones se resuelven en el navegador.
+
+Vercel mantiene la protección de la vista previa. Su comprobación autenticada remota requiere la sesión del propietario; no se desactivó la protección ni se modificó producción.

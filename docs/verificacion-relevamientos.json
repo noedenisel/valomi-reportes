@@ -1,7 +1,7 @@
 {
   "pruebasLogica": {
-    "total": 74,
-    "correctas": 74,
+    "total": 77,
+    "correctas": 77,
     "fallos": 0
   },
   "pruebasNavegador": {
@@ -129,5 +129,25 @@
     "demo navegador",
     "modo real sin credenciales ni conexión Supabase"
   ],
-  "publicacion": "Rama de revisión, sin publicar en producción"
+  "publicacion": "Rama de revisión, sin publicar en producción",
+  "correccionPreview": {
+    "fecha": "2026-11-25",
+    "antes": {
+      "panel_sin_demo": 404,
+      "api_sin_demo": 404
+    },
+    "despues": {
+      "panel_demo_preview": 200,
+      "con_base_sin_sesion_panel": 307,
+      "con_base_sin_sesion_api": 401
+    },
+    "configuracion": "Sólo proyecto demo en Preview, sin modificar guardas de sesión ni el proyecto real",
+    "pruebasNavegador": {
+      "correctas": 27,
+      "fallos": 0,
+      "solicitudesExternas": 0,
+      "enviosAlServidor": 0
+    },
+    "verificacionRemota": "Vercel Authentication activa; verificación de flujo realizada localmente con la configuración de Preview."
+  }
 }
