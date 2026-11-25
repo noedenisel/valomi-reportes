@@ -1,0 +1,165 @@
+{
+  "pruebasLogica": {
+    "total": 80,
+    "correctas": 80,
+    "fallos": 0
+  },
+  "pruebasNavegador": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "Previsualizar no guarda",
+        "passed": true
+      },
+      {
+        "check": "Mensaje real: seis fichas",
+        "passed": true
+      },
+      {
+        "check": "Mensaje real: cero aprobaciones",
+        "passed": true
+      },
+      {
+        "check": "Mensaje real: no se infieren fechas, puntos ni URLs",
+        "passed": true
+      },
+      {
+        "check": "Mensaje real: cero estadísticas aprobadas",
+        "passed": true
+      },
+      {
+        "check": "Mensaje real: mapa idéntico después de importar",
+        "passed": true
+      },
+      {
+        "check": "Faltantes bloquean aprobación aunque se marquen checks",
+        "passed": true
+      },
+      {
+        "check": "Faltantes bloquean mapa",
+        "passed": true
+      },
+      {
+        "check": "Privado: sin desborde escritorio",
+        "passed": true
+      },
+      {
+        "check": "Privado: ningún envío a servidor ni servicio externo",
+        "passed": true
+      },
+      {
+        "check": "Privado: sin errores JavaScript",
+        "passed": true
+      },
+      {
+        "check": "Previsualizar no guarda",
+        "passed": true
+      },
+      {
+        "check": "Aprobación exige ambos checks",
+        "passed": true
+      },
+      {
+        "check": "Histórico no habilita mapa",
+        "passed": true
+      },
+      {
+        "check": "Archivo suma una aprobación",
+        "passed": true
+      },
+      {
+        "check": "Archivo no publica en mapa",
+        "passed": true
+      },
+      {
+        "check": "Vincular duplicado no aumenta conteo",
+        "passed": true
+      },
+      {
+        "check": "Mapa suma una ficha aprobada",
+        "passed": true
+      },
+      {
+        "check": "Mapa DEMO: origen y revisión, sin corroboración automática",
+        "passed": true
+      },
+      {
+        "check": "Mapa no revela fuentes privadas ni identificadores internos",
+        "passed": true
+      },
+      {
+        "check": "Exportación identificada como DEMO",
+        "passed": true
+      },
+      {
+        "check": "Exportación sólo contiene agregados",
+        "passed": true
+      },
+      {
+        "check": "Sin desborde móvil",
+        "passed": true
+      },
+      {
+        "check": "Retirar mapa elimina su conteo",
+        "passed": true
+      },
+      {
+        "check": "Retirar mapa elimina publicación",
+        "passed": true
+      },
+      {
+        "check": "DEMO: sin excepciones JavaScript",
+        "passed": true
+      },
+      {
+        "check": "DEMO: cero envíos a servidor o terceros",
+        "passed": true
+      }
+    ],
+    "checks_count": 27,
+    "errors": {
+      "js": [],
+      "console": [],
+      "network_mutations": [],
+      "external": []
+    },
+    "scope": "Demo local en contextos IndexedDB aislados; las decisiones se probaron solo con casos ficticios."
+  },
+  "compilaciones": [
+    "demo navegador",
+    "modo real sin credenciales ni conexión Supabase"
+  ],
+  "publicacion": "Rama de revisión, sin publicar en producción",
+  "correccionPreview": {
+    "fecha": "2026-11-25",
+    "antes": {
+      "panel_sin_demo": 404,
+      "api_sin_demo": 404
+    },
+    "despues": {
+      "panel_demo_preview": 200,
+      "con_base_sin_sesion_panel": 307,
+      "con_base_sin_sesion_api": 401
+    },
+    "configuracion": "Sólo proyecto demo en Preview, sin modificar guardas de sesión ni el proyecto real",
+    "pruebasNavegador": {
+      "correctas": 27,
+      "fallos": 0,
+      "solicitudesExternas": 0,
+      "enviosAlServidor": 0
+    },
+    "verificacionRemota": "Vercel Authentication activa; verificación de flujo realizada localmente con la configuración de Preview."
+  },
+  "fuentesPorHecho": {
+    "passed": true,
+    "fuentesImportadas": 25,
+    "fuentesConservadasTrasEdicion": 30,
+    "fuenteInvalidaNoReemplazaDatos": true,
+    "estado": "pendiente",
+    "aprobaciones": 0,
+    "conteos": 0,
+    "solicitudesExternasOEscriturasDeRed": [],
+    "erroresJavaScript": [],
+    "alcance": "Solo demo local en contexto IndexedDB aislado y datos ficticios."
+  }
+}

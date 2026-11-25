@@ -10,6 +10,7 @@ import {
 } from './reglas.ts';
 import type { Adjunto, Base, MetodoConfirmacion, Reporte, Solicitud } from './tipos.ts';
 import { aprobarInforme, generarInforme, limitesMes, mesCerrado, mesesConReportes, periodoDe, retirarInforme } from './observatorio.ts';
+import { accionRelevamiento, aplicarConservacionRelevamientos, retirarFichaDelReporte, vistaRelevamientos } from './relevamientos.ts';
 
 const anillo = LIMITE as [number, number][];
 const DIA = 24 * 3600_000;
@@ -51,6 +52,7 @@ export async function aplicarConservacion(b: Base, ahora: number, borrar: Borrar
   b.reportes = b.reportes.filter((r) => ahora - r.momento <= 365 * DIA);
   b.solicitudes = b.solicitudes.filter((s) => !s.resuelta || ahora - s.resuelta <= 365 * DIA);
   b.registro = b.registro.filter((l) => ahora - l.fecha <= 365 * DIA);
+  aplicarConservacionRelevamientos(b, ahora);
 }
 
 async function borrarArchivos(r: Reporte, borrar: BorrarArchivo) {
@@ -189,15 +191,17 @@ export function vistaModeracion(b: Base, ahora: number) {
     meses: mesesConReportes(b).map((periodo) => ({ periodo, cerrado: mesCerrado(periodo, ahora) })),
     informes: [...(b.informes ?? [])].sort((a, c) => c.periodo.localeCompare(a.periodo) || c.generado - a.generado),
   };
-  return { pendientes, revisados, solicitudes, observatorio, registro: b.registro.slice(-30).reverse() };
+  return { pendientes, revisados, solicitudes, observatorio, relevamientos: vistaRelevamientos(b, ahora), registro: b.registro.slice(-30).reverse() };
 }
 
 /** Devuelve un mensaje de error, o null si la acción se hizo. */
 export async function accionModeracion(b: Base, d: Record<string, unknown>, ahora: number, borrar: BorrarArchivo): Promise<string | null> {
+  if (typeof d.accion === 'string' && d.accion.startsWith('relevamiento-')) return accionRelevamiento(b, d, ahora, borrar);
   const anotar = (accion: string, numero?: string, detalle?: string) => b.registro.push({ fecha: ahora, accion, numero, detalle });
   const r = d.id ? b.reportes.find((x) => x.id === d.id) : undefined;
   const quitar = async (rep: Reporte) => {
     await borrarArchivos(rep, borrar);
+    retirarFichaDelReporte(b, rep, ahora);
     b.reportes = b.reportes.filter((x) => x.id !== rep.id);
   };
 

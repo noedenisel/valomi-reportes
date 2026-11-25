@@ -326,6 +326,7 @@ function Ficha({ reportes, todos, ahora, alCerrar, alElegir }: {
       </div>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         <span className={`estado estado--${r.estado}`}>{ETIQUETA_ESTADO[r.estado]}</span>
+        {r.origen === 'relevamiento-valomi' && <span className="estado">Relevamiento VaLoMi</span>}
         {r.demo && <span className="demo">DEMO · datos ficticios</span>}
       </div>
       <span className="ayuda">{haceCuando(r.momento, ahora)} · {r.zona ? 'zona aproximada' : 'Ubicación no publicada'} · Reporte N.º {r.numero}</span>

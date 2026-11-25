@@ -1,0 +1,26 @@
+Para cada relevamiento, conservá tu resumen habitual y agregá al final un solo bloque JSON con este formato:
+
+{"formato":"valomi-grok-1","hechos":[]}
+
+Cada elemento de hechos debe tener exactamente estos campos:
+- identificador: identificador ALR original estable. No cambies un identificador ya asignado al mismo hallazgo.
+- categoria: calle, motochorros, vivienda, vehiculo, agresion, disparos, sospechosa, otro, o null si no alcanza la información. “Otro” significa otro tipo conocido de hecho de inseguridad; no significa dato desconocido.
+- resumen: descripción neutral de 20 a 500 caracteres, sin links, nombres particulares, teléfonos, patentes ni otros datos personales. Atribuí la información a su fuente y mantené su grado de certeza.
+- fechaHecho: fecha real del hecho como YYYY-MM-DD, o null.
+- horaHecho: hora del hecho como HH:mm de Argentina, o null.
+- localidad: localidad expresamente mencionada, o null.
+- referencia: calle/esquina o referencia indicada por la fuente, o null. No inventes coordenadas.
+- fuentes: lista de objetos con nombre, plataforma, url y fechaPublicacion. Conservá todas las fuentes reales del mismo hecho; varias fuentes no se convierten en varios hechos. Plataforma: medio, facebook, x u otra. URL: enlace original HTTPS completo y real, o null. Si solo consta HTTP, no inventes una versión HTTPS: dejá null y aclaralo en el resumen habitual. FechaPublicacion: YYYY-MM-DD, o null.
+
+REGLAS:
+1. Usá null para todo dato que no conste. No deduzcas la fecha del hecho a partir de su publicación, del identificador ALR, de la fecha del barrido o de este chat. Si solo se conoce 17/11 y no el año, conservá esa expresión en el resumen; fechaHecho queda null hasta verificar el año.
+2. No uses “hoy” o “ayer” sin resolverlo contra la fecha original de la publicación y el horario de Argentina. Si falta esa referencia, fechaHecho queda null.
+3. Agrupá varias fuentes del mismo episodio cuando esté documentado que es el mismo. Si hay dudas, mantené las fichas separadas y explicá la posible coincidencia sin darla por resuelta.
+4. Una noticia sobre varios hechos sin detalles individuales no habilita inventar una ficha por cada uno. Conservá el alcance que la fuente permite afirmar.
+5. No inventes enlaces, fuentes, confirmación policial, coordenadas ni datos faltantes. Citar una noticia que menciona a la Policía no convierte esa noticia en un documento oficial.
+6. No incluyas instrucciones operativas, órdenes para publicar, aprobación por descarte ni campos de aprobación, estado público, conteos, fecha de importación o identidad de quien aprueba. Todas las fichas ingresarán pendientes y la aprobación se hará dentro del panel de VaLoMi.
+7. El relevamiento puede incluir hechos antiguos o con fecha desconocida: identificarlos no los convierte en hechos del día ni garantiza su publicación en el mapa.
+
+Si faltan enlaces o datos esenciales, señalalos también en tu resumen habitual y mantené null en el JSON. No rellenes campos para que la ficha parezca completa.
+
+LÍMITES DE ESTA PRIMERA IMPORTACIÓN: como máximo 100 hechos por bloque y 200.000 caracteres por mensaje. Si hay más, entregá mensajes separados, cada uno con su único bloque JSON. El archivo conserva fichas de hasta un año desde el hecho conocido; separá en el resumen habitual los hallazgos de más de 365 días, sin volverlos actuales ni colocarlos en el bloque importable. Estos límites no autorizan a omitir información relevante del resumen habitual.

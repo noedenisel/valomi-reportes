@@ -1,17 +1,19 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { Adjunto, DatosMes, InformeMensual, LineaRegistro, MetodoConfirmacion, Reporte, Solicitud } from '@/lib/tipos';
+import type { Adjunto, DatosMes, InformeMensual, LineaRegistro, MetodoConfirmacion, Reporte, Solicitud, VistaRelevamientos } from '@/lib/tipos';
 import { nombreMes } from '@/lib/observatorio';
 import { DEMO_NAVEGADOR } from '@/lib/modo';
 import { ETIQUETA_ESTADO, haceCuando, horaAR } from '@/lib/formato';
 import { TIPOS, nombreTipo } from '@/lib/reglas';
+import { BandejaRelevamientos } from './BandejaRelevamientos';
 
 // En la demostración online, los archivos vienen como direcciones del propio navegador (urlOriginal).
 type ReporteMod = Omit<Reporte, 'adjuntos'> & { plazoMs: number | null; adjuntos: (Adjunto & { urlOriginal?: string | null })[] };
 const urlOriginal = (a: { id: string; urlOriginal?: string | null }) => a.urlOriginal ?? `/api/adjuntos/${a.id}?original=1`;
 type Datos = {
   pendientes: ReporteMod[]; revisados: ReporteMod[]; solicitudes: (Solicitud & { reporteNumero: string | null })[]; registro: LineaRegistro[];
+  relevamientos: VistaRelevamientos;
   observatorio: { meses: { periodo: string; cerrado: boolean }[]; informes: InformeMensual[] };
 };
 
@@ -32,7 +34,7 @@ export function PanelModeracion() {
   const [mensaje, setMensaje] = useState<string | null>(null);
 
   const cargar = useCallback(() => {
-    fetch('/api/moderacion')
+    return fetch('/api/moderacion', { cache: 'no-store' })
       .then((r) => {
         if (r.status === 401) location.href = '/entrar';
         if (!r.ok) throw new Error();
@@ -41,7 +43,7 @@ export function PanelModeracion() {
       .then(setDatos)
       .catch(() => setMensaje('No se pudo cargar el panel.'));
   }, []);
-  useEffect(cargar, [cargar]);
+  useEffect(() => { void cargar(); }, [cargar]);
 
   const accion = async (cuerpo: Record<string, unknown>) => {
     const r = await fetch('/api/moderacion', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(cuerpo) });
@@ -52,6 +54,27 @@ export function PanelModeracion() {
     const d = await r.json().catch(() => ({}));
     setMensaje(r.ok ? 'Listo.' : d.mensaje ?? 'No se pudo hacer.');
     cargar();
+  };
+
+  // La bandeja necesita distinguir errores para conservar el texto y no anunciar una importación fallida.
+  // Las acciones de moderación anteriores mantienen su contrato sin rechazos sin capturar.
+  const accionRelevamiento = async (cuerpo: Record<string, unknown>) => {
+    let r: Response;
+    try {
+      r = await fetch('/api/moderacion', {
+        method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(cuerpo),
+      });
+    } catch {
+      throw new Error('No se pudo conectar con el panel. Revisá la conexión y probá de nuevo.');
+    }
+    if (r.status === 401) {
+      location.href = '/entrar';
+      throw new Error('La sesión terminó. Volvé a entrar al panel.');
+    }
+    const respuesta = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(typeof respuesta.mensaje === 'string' ? respuesta.mensaje : 'No se pudo guardar. Probá de nuevo.');
+    setMensaje(null);
+    await cargar();
   };
 
   const salir = async () => {
@@ -84,7 +107,10 @@ export function PanelModeracion() {
           Salir del panel
         </button>
       )}
-      <a href="/reportar" className="boton boton--primario boton--chico" style={{ justifySelf: 'start' }}>Cargar reporte</a>
+      <div className="fila-botones">
+        <a href="/reportar" className="boton boton--primario boton--chico">Cargar reporte</a>
+        <a href="#relevamientos" className="boton boton--secundario boton--chico">Relevamientos de Grok</a>
+      </div>
       {mensaje && <p role="status" className="ayuda">{mensaje}</p>}
 
       <section className="grilla-mod" aria-labelledby="pend">
@@ -119,6 +145,8 @@ export function PanelModeracion() {
         })}
       </section>
 
+      <BandejaRelevamientos datos={datos.relevamientos} accion={accionRelevamiento} />
+
       <Observatorio datos={datos.observatorio} accion={accion} />
 
       <section className="grilla-mod" aria-labelledby="rev">
@@ -149,6 +177,7 @@ function Tarjeta({ r, accion, recargar }: { r: ReporteMod; accion: (c: Record<st
     <article className={`tarjeta-mod${retenido ? ' tarjeta-mod--retenido' : ''}`}>
       <div className="tarjeta-mod__meta">
         <strong>N.º {r.numero}</strong>
+        <span>{r.origen === 'relevamiento-valomi' ? 'Relevamiento VaLoMi' : 'Reportes de vecinos'}</span>
         <span>{retenido ? 'Retenido (posibles datos personales)' : r.estado === 'publicado-revisado' ? 'Publicado, revisado' : 'Publicado, sin revisar'}</span>
         <span className={`estado estado--${r.estadoPublico}`}>{ETIQUETA_ESTADO[r.estadoPublico]}</span>
         {r.demo && <span className="demo">DEMO</span>}

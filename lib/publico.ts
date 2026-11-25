@@ -15,6 +15,7 @@ export type ReportePublico = {
   fotos: string[];
   adjuntosEnRevision: boolean;
   demo: boolean;
+  origen?: 'relevamiento-valomi';
 };
 
 export function esVisible(r: Reporte, ahora = Date.now()) {
@@ -35,5 +36,6 @@ export function aPublico(r: Reporte): ReportePublico {
     fotos: r.adjuntos.filter((a) => a.estado === 'publicado' && a.publico).map((a) => `/api/adjuntos/${a.id}`),
     adjuntosEnRevision: r.adjuntos.some((a) => a.estado === 'en-revision'),
     demo: Boolean(r.demo),
+    ...(r.origen === 'relevamiento-valomi' ? { origen: 'relevamiento-valomi' as const } : {}),
   };
 }

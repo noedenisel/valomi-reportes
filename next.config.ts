@@ -18,6 +18,12 @@ const POLITICA_CONTENIDO = [
 ].join('; ');
 
 const config: NextConfig = {
+  // El Preview del proyecto de demostración también usa datos locales del navegador.
+  // Compilar este valor mantiene alineados el servidor y el cliente.
+  ...(process.env.VERCEL_ENV === 'preview'
+    && process.env.VERCEL_PROJECT_ID === 'prj_wMEsSpWxE9yZ2skvXAIBifpU8Goz'
+    ? { env: { NEXT_PUBLIC_VALOMI_DEMO: 'navegador' } }
+    : {}),
   // Permite compilar en otra carpeta sin pisar la del servidor de desarrollo (NEXT_DIST_DIR=.next-prueba).
   distDir: process.env.NEXT_DIST_DIR || '.next',
   async headers() {
